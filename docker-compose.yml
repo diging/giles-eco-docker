@@ -19,8 +19,14 @@ services:
     nepomuk:
         build: ./Nepomuk
         ports:
-            - "8080:8080"
+            - "8081:8080"
         depends_on:
             - kafka
         volumes:
             - ./data:/data
+    cepheus:
+        build: ./cepheus
+        ports:
+            - "8082:8080"
+        depends_on:
+            - kafka
