@@ -25,8 +25,15 @@ services:
         volumes:
             - ./data:/data
     cepheus:
-        build: ./cepheus
+        build: ./Cepheus
         ports:
             - "8082:8080"
         depends_on:
             - kafka
+    cassiopeia:
+        build: ./Cassiopeia
+        ports:
+            - "8083:8080"
+        depends_on:
+            - kafka
+        
