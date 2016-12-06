@@ -24,7 +24,7 @@ RUN \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
-ARG cassiopeia_url=http://cassiopeia:8080/cassiopeia
+ARG cassiopeia_url=http://cassiopeia:8080/cassiopeia/
 
 # install giles-eco-requests
 RUN mkdir gitrepos

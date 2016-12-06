@@ -23,7 +23,7 @@ RUN \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
-ARG cepheus_url=http://cepheus:8080/cepheus
+ARG cepheus_url=http://cepheus:8080/cepheus/
 
 # install giles-eco-requests
 RUN mkdir gitrepos

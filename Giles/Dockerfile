@@ -25,7 +25,7 @@ RUN \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
-ARG giles_url=http://giles:8080/giles
+ARG giles_url=http://giles:8080/giles/
 
 # install giles-eco-requests
 RUN mkdir gitrepos
@@ -58,6 +58,9 @@ RUN git clone https://github.com/diging/giles-eco-giles-web.git
 WORKDIR giles-eco-giles-web/giles-eco
 RUN mvn clean package -P prod -Dgeco.giles.db_files=/usr/local/tomcat/giles-work -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://localhost:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp
 
+# create SQL database, table, and use
+RUN /etc/init.d/mysql restart && mysql < src/main/resources/db/UserConnection.sql
+
 # deploy Giles
 RUN cp ./target/giles.war /usr/local/tomcat/webapps/
 
@@ -65,3 +68,8 @@ WORKDIR /usr/local/tomcat/
 RUN mkdir giles-work
 WORKDIR giles-work
 RUN mkdir tmp
+
+COPY scripts/startup /tmp/
+RUN chmod 755 /tmp/startup
+
+CMD /tmp/startup

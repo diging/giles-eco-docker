@@ -23,7 +23,7 @@ RUN \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
-ARG nepomuk_url=http://nepomuk:8080/nepomuk
+ARG nepomuk_url=http://nepomuk:8080/nepomuk/
 
 RUN mkdir gitrepos
 WORKDIR gitrepos
