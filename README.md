@@ -5,10 +5,11 @@ This repository holds Docker files for the Giles Ecosystem.
 ## Set Up
 To start up the Gile Ecosystem, do the following:
 
-1. install docker and docker-compose
-1. clone this repository
-1. go to the giles-eco-docker directory
-1. run `docker-compose up`
+1. Install docker and docker-compose.
+1. Clone this repository.
+1. Go to the giles-eco-docker directory.
+1. Create a folder called `data` with 4 folders inside called: `imgs`, `others`, `pdfs`, `texts`. The data folder will store all uploaded and extracted files.
+1. Run `docker-compose up`.
 
 This will start the Giles Ecosystem docker environment. There will be 6 docker container running.
 
@@ -27,3 +28,7 @@ Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clickin
 ## User Accounts
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
+
+## Notes
+
+If you are on a Mac, you can get the IP the services are running under by using the command `docker-machine ip`. Otherwise, the services should be mapped onto your localhost.
