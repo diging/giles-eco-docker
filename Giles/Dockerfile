@@ -56,7 +56,7 @@ RUN mvn clean install
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-giles-web.git
 WORKDIR giles-eco-giles-web/giles-eco
-RUN mvn clean package -P prod -Dgeco.giles.db_files=/usr/local/tomcat/giles-work -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://localhost:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp
+RUN mvn clean package -P prod -Dgeco.giles.db_files=/usr/local/tomcat/giles-work -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://localhost:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp -Ddigilib.url=http://digilib:8080/digilib/servlet/Scaler/
 
 # create SQL database, table, and use
 RUN /etc/init.d/mysql restart && mysql < src/main/resources/db/UserConnection.sql
