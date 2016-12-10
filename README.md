@@ -11,7 +11,7 @@ To start up the Gile Ecosystem, do the following:
 1. Create a folder called `data` with 4 folders inside called: `imgs`, `others`, `pdfs`, `texts`. The data folder will store all uploaded and extracted files.
 1. Run `docker-compose up`.
 
-This will start the Giles Ecosystem docker environment. There will be 6 docker container running.
+This will start the Giles Ecosystem docker environment. There will be 7 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), Apache Kafka and Zookeeper.
 
 The following ports will be exposed:
 * `8080`: your Giles instance
