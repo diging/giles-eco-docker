@@ -33,7 +33,7 @@ RUN mvn clean install
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-nepomuk.git
 WORKDIR giles-eco-nepomuk/nepomuk
-RUN mvn clean package -Dnepomuk.db.files=/usr/local/tomcat/persist/db/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/usr/local/tomcat/persist/files/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url
+RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/usr/local/tomcat/persist/files/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url
 
 # deploy Nepomuk
 RUN cp ./target/nepomuk.war /usr/local/tomcat/webapps/
