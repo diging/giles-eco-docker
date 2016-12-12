@@ -40,6 +40,8 @@ services:
         build: ./Giles
         ports:
             - "8080:8080"
+        volumes:
+            - ./data:/data
         depends_on:
             - kafka
     digilib:
