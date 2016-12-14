@@ -19,11 +19,13 @@ The following ports will be exposed:
 * `8082`: your Cepheus instance
 * `8083`: your Cassiopeia instance
 
-Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use.
-
-Next, under "System" go to "Authentication". Generate new signing secrets.
-
-Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". For each application, login as admin/admin (see list above for port numbers), go to "System Config", and copy/paste the token that Giles generated.
+## Configuration
+1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin. 
+1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use.
+1. Under "System" go to "Authentication". Generate new signing secrets.
+1. Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". 
+  * For each application, login as admin/admin (see list above for port numbers).
+  * Go to "System Config", and copy/paste the token that Giles generated.
 
 ## User Accounts
 
