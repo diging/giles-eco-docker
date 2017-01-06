@@ -8,6 +8,7 @@ To start up the Gile Ecosystem, do the following:
 1. Install docker and docker-compose.
 1. Clone this repository.
 1. Go to the giles-eco-docker directory.
+1. Go into either the `develop` or `latest_tag` folder. Starting Docker from the folder `develop` will pull the latest code from the develop branch of each component. This might result in an unstable version of the Giles Ecosystem. Starting Docker from the folder `latest_tag` will build the latest release version of each component. It is recommended to use the `latest_tag` folder.
 1. Create a folder called `data` with the folllowing folders inside called: `imgs`, `others`, `pdfs`, `texts`, `dbs`. Inside the `dbs` folder create two more folders: `giles` and `nepomuk`. The data folder will store all uploaded and extracted files. The dbs folder will contain the applications databases.
 1. Run `docker-compose up`.
 
