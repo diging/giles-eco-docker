@@ -20,17 +20,13 @@ The following ports will be exposed:
 * `8083`: your Cassiopeia instance
 
 ## Configuration
-1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin. 
+1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
 1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use.
 1. Under "System" go to "Authentication". Generate new signing secrets.
-1. Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". 
+1. Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps".
   * For each application, login as admin/admin (see list above for port numbers).
   * Go to "System Config", and copy/paste the token that Giles generated.
 
 ## User Accounts
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
-
-## Notes
-
-If you are on a Mac, you can get the IP the services are running under by using the command `docker-machine ip`. Otherwise, the services should be mapped onto your localhost.

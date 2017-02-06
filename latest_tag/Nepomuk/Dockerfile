@@ -27,10 +27,10 @@ ARG nepomuk_url=http://nepomuk:8080/nepomuk/
 
 RUN mkdir gitrepos
 WORKDIR gitrepos
-RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
-WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install
-WORKDIR ../..
+RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag} && cd giles-eco-requests && mvn clean install
+
+RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag} && cd util && mvn clean install
+
 RUN git clone https://github.com/diging/giles-eco-nepomuk.git && cd giles-eco-nepomuk && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-nepomuk/nepomuk
 RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/data/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url
