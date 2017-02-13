@@ -24,7 +24,7 @@ The following ports will be exposed:
 1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
 1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use. In GitHub, for instance, go to your settings and register a new OAuth application.
 1. Under "System" go to "Authentication". Generate new signing secrets.
-1. Go to "Apps" in the main menu (note that currently the link "Take me to app tokens!" does not work). Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps".
+1. Go to "Apps" in the main menu (note that currently the link "Take me to app tokens!" does not work). Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". You can leave the "Identity Provider" and (empty) "Provider Client ID" fields as they are.
   * For each application, login as admin/admin (see list above for port numbers).
   * Go to "System Config", and copy/paste the token that Giles generated.
 
