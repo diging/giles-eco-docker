@@ -15,10 +15,10 @@ To start up the Gile Ecosystem, do the following:
 This will start the Giles Ecosystem docker environment. There will be 7 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), Apache Kafka and Zookeeper.
 
 The following ports will be exposed:
-* `8080`: your Giles instance
-* `8081`: your Nepomuk instance
-* `8082`: your Cepheus instance
-* `8083`: your Cassiopeia instance
+* `8080`: your Giles instance; the webapp is running at `http://locahost:8080/giles`
+* `8081`: your Nepomuk instance; the webapp is running at `http://locahost:8081/nepomuk`
+* `8082`: your Cepheus instance; the webapp is running at `http://locahost:8082/cepheus`
+* `8083`: your Cassiopeia instance; the webapp is running at `http://locahost:8083/cassiopeia`
 
 ## Configuration
 1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
