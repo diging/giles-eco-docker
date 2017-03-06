@@ -15,19 +15,22 @@ To start up the Gile Ecosystem, do the following:
 This will start the Giles Ecosystem docker environment. There will be 7 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), Apache Kafka and Zookeeper.
 
 The following ports will be exposed:
-* `8080`: your Giles instance
-* `8081`: your Nepomuk instance
-* `8082`: your Cepheus instance
-* `8083`: your Cassiopeia instance
+* `8080`: your Giles instance; the webapp is running at `http://locahost:8080/giles`
+* `8081`: your Nepomuk instance; the webapp is running at `http://locahost:8081/nepomuk`
+* `8082`: your Cepheus instance; the webapp is running at `http://locahost:8082/cepheus`
+* `8083`: your Cassiopeia instance; the webapp is running at `http://locahost:8083/cassiopeia`
 
 ## Configuration
 1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
-1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use.
+1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use. In GitHub, for instance, go to your settings and register a new OAuth application.
 1. Under "System" go to "Authentication". Generate new signing secrets.
-1. Go to "Apps". Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps".
+1. Go to "Apps" in the main menu (note that currently the link "Take me to app tokens!" does not work). Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". You can leave the "Identity Provider" and (empty) "Provider Client ID" fields as they are.
   * For each application, login as admin/admin (see list above for port numbers).
   * Go to "System Config", and copy/paste the token that Giles generated.
 
 ## User Accounts
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
+
+## Note
+If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
