@@ -24,14 +24,16 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
 ARG nepomuk_url=http://nepomuk:8080/nepomuk/
+ARG request_version=v0.2.1-SNAPSHOT
+ARG util_version=v0.4.2-SNAPSHOT
 
 RUN mkdir gitrepos
 WORKDIR gitrepos
-RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests/giles-eco-requests && mvn clean install
-RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util/util && mvn clean install
+RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests/giles-eco-requests && mvn clean install -Dgeco.requests.version=request_version
+RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util/util && mvn clean install -Dgeco.util.version=util_version
 RUN git clone https://github.com/diging/giles-eco-nepomuk.git
 WORKDIR giles-eco-nepomuk/nepomuk
-RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/usr/local/tomcat/persist/files/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url
+RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/usr/local/tomcat/persist/files/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url -Dgeco.requests.version=request_version -Dgeco.util.version=util_version
 
 # deploy Nepomuk
 RUN cp ./target/nepomuk.war /usr/local/tomcat/webapps/

@@ -25,24 +25,26 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
 ARG cassiopeia_url=http://cassiopeia:8080/cassiopeia/
+ARG request_version=v0.2.1-SNAPSHOT
+ARG util_version=v0.4.2-SNAPSHOT
 
 # install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
 RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install
+RUN mvn clean install -Dgeco.requests.version=request_version
 
 # install giles-eco-util
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-util/util
-RUN mvn clean install
+RUN mvn clean install -Dgeco.util.version=util_version
 
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-cassiopeia.git && cd giles-eco-cassiopeia && git checkout master && git pull && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-cassiopeia/cassiopeia
-RUN mvn clean package -Dcassiopeia.baseDir=/usr/local/tomcat/cassiopeia-work -Dcassiopeia.tmp.folder=tmp -Dlog.level=info -Dkafka.hosts=$kafka_host -Dcassiopeia.base.url=$cassiopeia_url -Dtesseract.bin=/usr/bin/ -Dtesseract.data=/usr/share/tesseract-ocr/
+RUN mvn clean package -Dcassiopeia.baseDir=/usr/local/tomcat/cassiopeia-work -Dcassiopeia.tmp.folder=tmp -Dlog.level=info -Dkafka.hosts=$kafka_host -Dcassiopeia.base.url=$cassiopeia_url -Dtesseract.bin=/usr/bin/ -Dtesseract.data=/usr/share/tesseract-ocr/ -Dgeco.requests.version=request_version -Dgeco.util.version=util_version
 
 # deploy Cassiopeia
 RUN cp ./target/cassiopeia.war /usr/local/tomcat/webapps/

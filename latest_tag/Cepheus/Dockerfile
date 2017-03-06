@@ -24,24 +24,26 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
 ARG cepheus_url=http://cepheus:8080/cepheus/
+ARG request_version=v0.2.1-SNAPSHOT
+ARG util_version=v0.4.2-SNAPSHOT
 
 # install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
 RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install
+RUN mvn clean install -Dgeco.requests.version=request_version
 
 # install giles-eco-util
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-util/util
-RUN mvn clean install
+RUN mvn clean install -Dgeco.util.version=util_version
 
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-cepheus.git && cd giles-eco-cepheus && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-cepheus/cepheus
-RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url
+RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url -Dgeco.requests.version=request_version -Dgeco.util.version=util_version
 
 # deploy Cepheus
 RUN cp ./target/cepheus.war /usr/local/tomcat/webapps/

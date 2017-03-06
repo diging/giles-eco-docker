@@ -26,19 +26,21 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
 ARG giles_url=http://giles:8080/giles/
+ARG request_version=v0.2.1-SNAPSHOT
+ARG util_version=v0.4.2-SNAPSHOT
 
 # install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
 RUN git clone https://github.com/diging/giles-eco-requests.git
 WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install
+RUN mvn clean install -Dgeco.requests.version=request_version
 
 # install giles-eco-util
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-util.git
 WORKDIR giles-eco-util/util
-RUN mvn clean install
+RUN mvn clean install -Dgeco.util.version=util_version
 
 # install spring social
 WORKDIR ../..
@@ -56,7 +58,7 @@ RUN mvn clean install
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-giles-web.git
 WORKDIR giles-eco-giles-web/giles-eco
-RUN mvn clean package -P prod -Dgeco.giles.db_files=/data/dbs/giles -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://localhost:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp -Ddigilib.url=http://digilib:8080/digilib/servlet/Scaler/
+RUN mvn clean package -P prod -Dgeco.giles.db_files=/data/dbs/giles -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://localhost:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp -Ddigilib.url=http://digilib:8080/digilib/servlet/Scaler/ -Dgeco.requests.version=request_version -Dgeco.util.version=util_version
 
 # create SQL database, table, and use
 RUN /etc/init.d/mysql restart && mysql < src/main/resources/db/UserConnection.sql
