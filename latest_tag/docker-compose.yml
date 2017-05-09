@@ -16,12 +16,22 @@ services:
             KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
+    mysql:
+        image: mysql/mysql-server
+        ports:
+            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: "sqlpassword"
+        volumes:
+            - ./data/mysql:/var/lib/mysql
+            - ./scripts/mysql:/docker-entrypoint-initdb.d
     nepomuk:
         build: ./Nepomuk
         ports:
             - "8081:8080"
         depends_on:
             - kafka
+            - mysql
         volumes:
             - ./data:/data
     cepheus:
@@ -42,8 +52,10 @@ services:
             - "8080:8080"
         volumes:
             - ./data:/data
+            - ./scripts/mysql:/scripts
         depends_on:
             - kafka
+            - mysql
     digilib:
         build: ./Digilib
         volumes:
