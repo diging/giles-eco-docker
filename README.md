@@ -9,8 +9,10 @@ To start up the Gile Ecosystem, do the following:
 1. Clone this repository.
 1. Go to the giles-eco-docker directory.
 1. Go into either the `develop` or `latest_tag` folder. Starting Docker from the folder `develop` will pull the latest code from the develop branch of each component. This might result in an unstable version of the Giles Ecosystem. Starting Docker from the folder `latest_tag` will build the latest release version of each component. It is recommended to use the `latest_tag` folder.
-1. Create a folder called `data` with the folllowing folders inside called: `imgs`, `others`, `pdfs`, `texts`, `dbs`. Inside the `dbs` folder create two more folders: `giles` and `nepomuk`. The data folder will store all uploaded and extracted files. The dbs folder will contain the applications databases.
+1. Create a folder called `data` with the following folders inside called: `imgs`, `others`, `pdfs`, `texts`, `mysql`, `dbs`. Inside the `dbs` folder create two more folders: `giles` and `nepomuk`. The data folder will store all uploaded and extracted files. The `mysql` folder will contain your database files. If you use a version earlier than v0.5 for Giles or v0.6 for Nepomuk, the folder `db` will contain the database files.
 1. Run `docker-compose up`.
+
+Note: if you have installed the Giles Ecosystem docker containers previously for an older release, make sure to remove all containers and images before installing it again. Otherwise you might end up running the older release or with a combination of non-compatible component versions.
 
 This will start the Giles Ecosystem docker environment. There will be 7 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), Apache Kafka and Zookeeper.
 
@@ -34,3 +36,6 @@ You should now be able to sign in to Giles using your selected sign in provider.
 
 ## Note
 If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
+
+## Update May 9, 2017 - Giles Ecosystem v0.6
+Currently only the latest tag version is properly running. If you want to use the latest develop version, you will have to adjust the docker files first.
