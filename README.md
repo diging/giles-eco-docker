@@ -21,13 +21,14 @@ The following ports will be exposed:
 * `8081`: your Nepomuk instance; the webapp is running at `http://locahost:8081/nepomuk`
 * `8082`: your Cepheus instance; the webapp is running at `http://locahost:8082/cepheus`
 * `8083`: your Cassiopeia instance; the webapp is running at `http://locahost:8083/cassiopeia`
+* `8084`: your Andromeda instance; the webapp is running at `http://localhost:8084/andromeda`
 
 ## Configuration
 1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
 1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use. In GitHub, for instance, go to your settings and register a new OAuth application.
 1. Under "System" go to "Authentication". Generate new signing secrets.
-1. Go to "Apps" in the main menu (note that currently the link "Take me to app tokens!" does not work). Create 3 new tokens for Nepomuk, Cepheus and Cassiopeia by clicking on "Register Apps". You can leave the "Identity Provider" and (empty) "Provider Client ID" fields as they are.
-  * For each application, login as admin/admin (see list above for port numbers).
+1. Go to "Apps" in the main menu. Create a new token for Nepomuk by clicking on "Register Apps". You can leave the "Identity Provider" and (empty) "Provider Client ID" fields as they are.
+  * Login to Nepomuk as admin/admin (see list above for port numbers).
   * Go to "System Config", and copy/paste the token that Giles generated.
 
 ## User Accounts
@@ -37,5 +38,3 @@ You should now be able to sign in to Giles using your selected sign in provider.
 ## Note
 If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
 
-## Update May 9, 2017 - Giles Ecosystem v0.6
-Currently only the latest tag version is properly running. If you want to use the latest develop version, you will have to adjust the docker files first.
