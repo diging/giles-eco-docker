@@ -40,6 +40,12 @@ services:
             - "8082:8080"
         depends_on:
             - kafka
+    andromeda:
+        build: ./andromeda
+        ports:
+            - "8084:8080"
+        depends_on:
+            - kafka
     cassiopeia:
         build: ./Cassiopeia
         ports:

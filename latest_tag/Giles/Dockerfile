@@ -47,7 +47,7 @@ RUN mvn clean install -Dgeco.util.version=$util_version
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util && git checkout master && git pull && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-september-util/september-util
-RUN mvn clean install -Dgeco.september.util.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
+RUN mvn clean install -Dgeco.septemberutil.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
 
 # install spring social
 WORKDIR ../..
