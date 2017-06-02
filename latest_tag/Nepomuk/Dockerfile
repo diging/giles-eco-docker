@@ -27,6 +27,7 @@ ARG kafka_host=kafka:9092
 ARG nepomuk_url=http://nepomuk:8080/nepomuk/
 ARG request_version=v0.2.1-SNAPSHOT
 ARG util_version=v0.4.2-SNAPSHOT
+ARG geco.septemberutil.version=v0.2
 
 RUN mkdir gitrepos
 WORKDIR gitrepos
