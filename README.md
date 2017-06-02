@@ -14,7 +14,7 @@ To start up the Gile Ecosystem, do the following:
 
 Note: if you have installed the Giles Ecosystem docker containers previously for an older release, make sure to remove all containers and images before installing it again. Otherwise you might end up running the older release or with a combination of non-compatible component versions.
 
-This will start the Giles Ecosystem docker environment. There will be 7 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), Apache Kafka and Zookeeper.
+This will start the Giles Ecosystem docker environment. There will be 9 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia, Andromeda (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), MySQL, Apache Kafka and Zookeeper.
 
 The following ports will be exposed:
 * `8080`: your Giles instance; the webapp is running at `http://locahost:8080/giles`
@@ -34,6 +34,25 @@ The following ports will be exposed:
 ## User Accounts
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
+
+## Upgrade Notes
+
+### Upgrading to Giles v0.5
+
+With version v0.5, Giles started to use MySQL (or PostgreSQL) as backend. If you are upgrading from an earlier version of Giles to version v0.5, you will have to migrate existing data as follows:
+* Make sure Giles is running without exceptions with the new version.
+* Reregister Nepomuk with Giles under "Apps".
+* Go to http://localhost:8080/giles/admin/migrate
+* Enter the username of the user whose data you want to migrate. The username will be a combination of username and provider id. For example for GitHub: githubusername_github. Depending on how much data the user has uploaded, this might take a while.
+* Once the migration is done for a user, you will see some statistics about how many objects were migrated.
+
+### Upgrading to Nepomuk v0.6
+
+With version v0.6, Nepomuk started to use MySQL (or PostgreSQL) as backend. If you are upgrading from an earlier version of Nepomuk to version v0.6, you will have to migrate existing data as follows:
+* Make sure Nepomuk is running without exceptions with the new version.
+* Go to http://localhost:8081/nepomuk/admin/migrate
+* Enter the username of the user whose data you want to migrate. The username will be a combination of provider id and provider user id. For example for GitHub: github_123456. Depending on how much data the user has uploaded, this might take a while.
+* Once the migration is done for a user, you will see some statistics about how many objects were migrated.
 
 ## Note
 If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
