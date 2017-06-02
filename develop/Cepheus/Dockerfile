@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get -y update
 RUN apt-get install -y maven
 RUN apt-get install -y git-all
+RUN apt-get install -y subversion
 
 # install JDK 8
 RUN \
@@ -26,24 +27,28 @@ ARG kafka_host=kafka:9092
 ARG cepheus_url=http://cepheus:8080/cepheus/
 ARG request_version=v0.2.1-SNAPSHOT
 ARG util_version=v0.4.2-SNAPSHOT
+ARG geco.septemberutil.version=v0.2
 
 # install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
 RUN git clone https://github.com/diging/giles-eco-requests.git
 WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install -Dgeco.requests.version=request_version
+RUN mvn clean install -Dgeco.requests.version=$request_version
 
 # install giles-eco-util
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-util.git
 WORKDIR giles-eco-util/util
-RUN mvn clean install -Dgeco.util.version=util_version
+RUN mvn clean install -Dgeco.util.version=$util_version
+
+# install september-util
+RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util/september-util && mvn clean install -Dgeco.septemberutil.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
 
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-cepheus.git
 WORKDIR giles-eco-cepheus/cepheus
-RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url -Dgeco.requests.version=request_version -Dgeco.util.version=util_version
+RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco.septemberutil.version
 
 # deploy Cepheus
 RUN cp ./target/cepheus.war /usr/local/tomcat/webapps/

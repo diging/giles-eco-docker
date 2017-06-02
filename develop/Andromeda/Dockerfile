@@ -24,35 +24,37 @@ RUN \
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
-ARG nepomuk_url=http://nepomuk:8080/nepomuk/
+ARG andromeda_url=http://andromeda:8080/andromeda/
 ARG request_version=v0.2.1-SNAPSHOT
 ARG util_version=v0.4.2-SNAPSHOT
 ARG geco.septemberutil.version=v0.2
 
+# install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
-RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests/giles-eco-requests && mvn clean install -Dgeco.requests.version=$request_version
+RUN git clone https://github.com/diging/giles-eco-requests.git
+WORKDIR giles-eco-requests/giles-eco-requests
+RUN mvn clean install -Dgeco.requests.version=$request_version
 
-RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util/util && mvn clean install -Dgeco.util.version=$util_version
+# install giles-eco-util
+WORKDIR ../..
+RUN git clone https://github.com/diging/giles-eco-util.git
+WORKDIR giles-eco-util/util
+RUN mvn clean install -Dgeco.util.version=$util_version
 
 # install september-util
 RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util/september-util && mvn clean install -Dgeco.septemberutil.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
 
-RUN git clone https://github.com/diging/giles-eco-nepomuk.git
-WORKDIR giles-eco-nepomuk/nepomuk
-RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/data/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dzookeeper.host=zookeeper -Ddb.database.url=jdbc:mysql://mysql:3306/nepomuk -Ddb.user=nepomuk -Ddb.password=NepomukPassword -Dgeco.september.util.version=$geco.septemberutil.version
+# install andromeda
+WORKDIR ../..
+RUN git clone https://github.com/diging/giles-eco-andromeda.git
+WORKDIR giles-eco-andromeda/andromeda
+RUN mvn clean package -Dandromeda.baseDir=/usr/local/tomcat/andromeda-work -Dandromeda.tmp.folder=tmp -Dlog.level=info -Dandromeda.kafka.hosts=$kafka_host -Dandromeda.base.url=$andromeda_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco.septemberutil.version
 
-# deploy Nepomuk
-RUN cp ./target/nepomuk.war /usr/local/tomcat/webapps/
+# deploy Cepheus
+RUN cp ./target/andromeda.war /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/
-RUN mkdir persist
-WORKDIR persist
-RUN mkdir db
-#WORKDIR ..
-#RUN mkdir files
-#WORKDIR files
-#RUN mkdir imgs
-#RUN mkdir texts
-#RUN mkdir pdfs
-#RUN mkdir other
+RUN mkdir andromeda-work
+WORKDIR andromeda-work
+RUN mkdir tmp
