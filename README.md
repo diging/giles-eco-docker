@@ -35,6 +35,9 @@ The following ports will be exposed:
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
 
+## Testing the system
+To test if the system works as expected, you can upload the provided (test file)[https://github.com/diging/giles-eco-docker/blob/master/GraceHopperWikipedia.pdf]. To see if the process finished successfully, go to "Your Uploads", click on the latest upload, then click on the document link. If processing has finished, you should see three badges indicating that image extraction, text extraction, and OCR are completed, and 11 pages should be listed with each three files (image file, extracted text file, and OCR result).
+
 ## Upgrade Notes
 
 ### Upgrading to Giles v0.5
