@@ -28,8 +28,8 @@ The following ports will be exposed:
 1. Under "System" go to "Social SigIn" and provide client ids and secret for the sign in provider you want to use. In GitHub, for instance, go to your settings and register a new OAuth application.
 1. Under "System" go to "Authentication". Generate new signing secrets.
 1. Go to "Apps" in the main menu. Create a new token for Nepomuk by clicking on "Register Apps". You can leave the "Identity Provider" and (empty) "Provider Client ID" fields as they are.
-  * Login to Nepomuk as admin/admin (see list above for port numbers).
-  * Go to "System Config", and copy/paste the token that Giles generated.
+1. Login to Nepomuk as admin/admin (see list above for port numbers).
+1. Go to "System Config", and copy/paste the token that Giles generated.
 
 ## User Accounts
 
