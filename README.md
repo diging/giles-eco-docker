@@ -35,7 +35,7 @@ The following ports will be exposed:
 
 You should now be able to sign in to Giles using your selected sign in provider. After the first time, you've signed in, log out again. Then sign in as admin and approve your user account under "Users" (the thumbs-up button at the end of a user row). You can make a user admin by clicking the key icon.
 
-## Testing the system
+## Testing the System
 To test if the system works as expected, you can upload the provided [test file](https://github.com/diging/giles-eco-docker/blob/master/GraceHopperWikipedia.pdf). To see if the process finished successfully, go to "Your Uploads", click on the latest upload, then click on the document link. If processing has finished, you should see three badges indicating that image extraction, text extraction, and OCR are completed, and 11 pages should be listed with each three files (image file, extracted text file, and OCR result).
 
 ## Upgrade Notes
@@ -60,3 +60,5 @@ With version v0.6, Nepomuk started to use MySQL (or PostgreSQL) as backend. If y
 ## Note
 If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
 
+## Reporting Issues
+If you run into issues setting up this docker environment or if the test file does not get processed successfully, please submit a [GitHub issue](https://github.com/diging/giles-eco-docker/issues). If the docker terminal shows exceptions or error messages, please include them in the ticket.
