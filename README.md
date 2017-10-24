@@ -57,8 +57,10 @@ With version v0.6, Nepomuk started to use MySQL (or PostgreSQL) as backend. If y
 * Enter the username of the user whose data you want to migrate. The username will be a combination of provider id and provider user id. For example for GitHub: github_123456. Depending on how much data the user has uploaded, this might take a while.
 * Once the migration is done for a user, you will see some statistics about how many objects were migrated.
 
-## Note
-If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` could fix it.
+## Notes
+If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` might fix it.
+
+If Docker doesn't have enough memory, the individual containers might quietly fail (specifically with exit code 137) when you try to access one of the apps. To fix this issue simply give Docker more memory.
 
 ## Reporting Issues
 If you run into issues setting up this docker environment or if the test file does not get processed successfully, please submit a [GitHub issue](https://github.com/diging/giles-eco-docker/issues). If the docker terminal shows exceptions or error messages, please include them in the ticket.
