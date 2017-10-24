@@ -41,7 +41,7 @@ services:
         depends_on:
             - kafka
     andromeda:
-        build: ./andromeda
+        build: ./Andromeda
         ports:
             - "8084:8080"
         depends_on:
