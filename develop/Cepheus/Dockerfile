@@ -25,9 +25,10 @@ ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 ARG kafka_host=kafka:9092
 ARG cepheus_url=http://cepheus:8080/cepheus/
-ARG request_version=v0.2.1-SNAPSHOT
-ARG util_version=v0.4.2-SNAPSHOT
-ARG geco.septemberutil.version=v0.2
+ARG request_version=0.6
+ARG util_version=0.4.2
+ARG geco_septemberutil_version=0.3
+ARG geco_kafka_util_version=0.1
 
 # install giles-eco-requests
 RUN mkdir gitrepos
@@ -43,12 +44,15 @@ WORKDIR giles-eco-util/util
 RUN mvn clean install -Dgeco.util.version=$util_version
 
 # install september-util
-RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util/september-util && mvn clean install -Dgeco.septemberutil.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
+RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util/september-util && mvn clean install -Dgeco.septemberutil.version=$geco_septemberutil_version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
+
+# install kafka-util
+RUN git clone https://github.com/diging/giles-eco-kafka-util.git && cd giles-eco-kafka-util/kafka-util && mvn clean install -Dgeco.kafka.util.version=$geco_kafka_util_version -Dgeco.september.util.version=$geco_septemberutil_version
 
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-cepheus.git
 WORKDIR giles-eco-cepheus/cepheus
-RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco.septemberutil.version
+RUN mvn clean package -Dcepheus.baseDir=/usr/local/tomcat/cepehus-work -Dcepheus.tmp.folder=tmp -Dlog.level=info -Dcepheus.kafka.hosts=$kafka_host -Dcepheus.base.url=$cepheus_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco_septemberutil_version -Dgeco.kafka-util.version=$geco_kafka_util_version
 
 # deploy Cepheus
 RUN cp ./target/cepheus.war /usr/local/tomcat/webapps/

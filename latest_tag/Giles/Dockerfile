@@ -1,4 +1,4 @@
-FROM tomcat:8.0
+FROM tomcat:8.5-jdk8-openjdk
 
 MAINTAINER Julia Damerow https://github.com/jdamerow
 
@@ -11,43 +11,30 @@ RUN apt-get install -y git-all
 #RUN apt-get install -y mysql-server
 RUN apt-get install -y subversion
 
-# install JDK 8
-RUN \
-  echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | tee -a /etc/apt/sources.list  && \
-  echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu precise main" | tee -a /etc/apt/sources.list && \
-  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 && \
-  apt-get -y update && \
-  apt-get -y install oracle-java8-installer && \
-  rm -rf /var/lib/apt/lists/*
-
-# Set environment variables.
-ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
-
 ARG kafka_host=kafka:9092
 ARG giles_url=http://giles:8080/giles/
-ARG request_version=v0.2.1-SNAPSHOT
-ARG util_version=v0.4.2-SNAPSHOT
+ARG request_version=0.6
+ARG util_version=0.4.2
+ARG kafka_util_version=v0.1
 ARG geco.septemberutil.version=v0.2
 
-# install giles-eco-requests
 RUN mkdir gitrepos
 WORKDIR gitrepos
-RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
-WORKDIR giles-eco-requests/giles-eco-requests
-RUN mvn clean install -Dgeco.requests.version=$request_version
 
-# install giles-eco-util
-WORKDIR ../..
-RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util && git checkout master && git pull && latesttag=$(git describe --tags) && git checkout ${latesttag}
-WORKDIR giles-eco-util/util
-RUN mvn clean install -Dgeco.util.version=$util_version
+# install requests
+RUN git clone https://github.com/diging/giles-eco-requests.git && cd giles-eco-requests && git checkout master && git pull  && git checkout v0.7 && cd giles-eco-requests && mvn clean install -Dgeco.requests.version=$request_version
+
+# install util
+RUN git clone https://github.com/diging/giles-eco-util.git && cd giles-eco-util && git checkout master && git pull && git checkout v0.4.3 && cd util && mvn clean install -Dgeco.util.version=$util_version
 
 # install september-util
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles-eco-september-util && git checkout master && git pull && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-september-util/september-util
 RUN mvn clean install -Dgeco.septemberutil.version=$geco.septemberutil.version -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version
+
+# install kafka util
+RUN git clone https://github.com/diging/giles-eco-kafka-util.git && cd giles-eco-kafka-util && git checkout master && git pull && git checkout v0.1 && cd kafka-util && mvn clean install -Dgeco.kafka.util.version=$kafka_util_version -Dgeco.september.util.version=$geco.septemberutil.version
 
 # install spring social
 WORKDIR ../..
@@ -65,7 +52,7 @@ RUN mvn clean install
 WORKDIR ../..
 RUN git clone https://github.com/diging/giles-eco-giles-web.git && cd giles-eco-giles-web && git checkout master && git pull  && latesttag=$(git describe --tags) && git checkout ${latesttag}
 WORKDIR giles-eco-giles-web/giles-eco
-RUN mvn clean package -P prod -Dgeco.giles.db_files=/data/dbs/giles/ -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://mysql:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp -Ddigilib.url=http://digilib:8080/digilib/servlet/Scaler/ -Dgeco.requests.version=$request_version -Dzookeeper.host=zookeeper -Demail.enabled=false -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco.septemberutil.version
+RUN mvn clean package -P prod -Dgeco.giles.db_files=/data/dbs/giles/ -Dlog.level=info -Dgiles.kafka.hosts=$kafka_host -Dgiles.base.url=$giles_url -Dmitreid.show.login=false -Ddb.database.url=jdbc:mysql://mysql:3306/giles -Ddb.user=giles -Ddb.password=GilesPassword -Dgiles.file.tmp.dir=/usr/local/tomcat/giles-work/tmp -Ddigilib.url=http://digilib:8080/digilib/servlet/Scaler/ -Dgeco.requests.version=$request_version -Dzookeeper.host=zookeeper -Demail.enabled=false -Dgeco.util.version=$util_version -Dgeco.september.util.version=$geco.septemberutil.version -Dgeco.kafka-util.version=$kafka_util_version
 
 # deploy Giles
 RUN cp ./target/giles.war /usr/local/tomcat/webapps/

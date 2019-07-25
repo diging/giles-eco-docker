@@ -17,7 +17,8 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
     mysql:
-        image: mysql/mysql-server
+        image: mysql/mysql-server:5.7
+        container_name: mysql
         ports:
             - "3306:3306"
         environment:
@@ -31,6 +32,7 @@ services:
             - "8081:8080"
         depends_on:
             - kafka
+            - zookeeper
             - mysql
         volumes:
             - ./data:/data
@@ -40,18 +42,21 @@ services:
             - "8082:8080"
         depends_on:
             - kafka
+            - zookeeper
     andromeda:
         build: ./Andromeda
         ports:
             - "8084:8080"
         depends_on:
             - kafka
+            - zookeeper
     cassiopeia:
         build: ./Cassiopeia
         ports:
             - "8083:8080"
         depends_on:
             - kafka
+            - zookeeper
     giles:
         build: ./Giles
         ports:
@@ -62,6 +67,7 @@ services:
         depends_on:
             - kafka
             - mysql
+            - zookeeper
     digilib:
         build: ./Digilib
         volumes:
