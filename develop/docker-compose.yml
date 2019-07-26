@@ -17,7 +17,8 @@ services:
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
     mysql:
-        image: mysql/mysql-server
+        image: mysql/mysql-server:5.7
+        container_name: mysql
         ports:
             - "3306:3306"
         environment:
@@ -61,6 +62,17 @@ services:
         depends_on:
             - kafka
             - mysql
+            - nepomuk
+    september:
+        build: ./September
+        ports:
+            - "8085:8080"
+        depends_on:
+            - kafka
+            - zookeeper
+            - mysql
+        volumes:
+            - ./data:/data
     digilib:
         build: ./Digilib
         volumes:
