@@ -9,12 +9,12 @@ To start up the Gile Ecosystem, do the following:
 1. Clone this repository.
 1. Go to the giles-eco-docker directory.
 1. Go into either the `develop` or `latest_tag` folder. Starting Docker from the folder `develop` will pull the latest code from the develop branch of each component. This might result in an unstable version of the Giles Ecosystem. Starting Docker from the folder `latest_tag` will build the latest release version of each component. It is recommended to use the `latest_tag` folder.
-1. Create a folder called `data` with the following folders inside called: `imgs`, `others`, `pdfs`, `texts`, `mysql`, `dbs`. Inside the `dbs` folder create two more folders: `giles` and `nepomuk`. The data folder will store all uploaded and extracted files. The `mysql` folder will contain your database files. If you use a version earlier than v0.5 for Giles or v0.6 for Nepomuk, the folder `db` will contain the database files.
+1. Create a folder called `data` with the following folders inside called: `imgs`, `others`, `pdfs`, `texts`, `mysql`, `dbs`. Inside the `dbs` folder create two more folders: `giles`, `september`, and `nepomuk`. The data folder will store all uploaded and extracted files. The `mysql` folder will contain your database files. If you use a version earlier than v0.5 for Giles or v0.6 for Nepomuk, the folder `db` will contain the database files.
 1. Run `docker-compose up`.
 
 Note: if you have installed the Giles Ecosystem docker containers previously for an older release, make sure to remove all containers and images before installing it again. Otherwise you might end up running the older release or with a combination of non-compatible component versions.
 
-This will start the Giles Ecosystem docker environment. There will be 9 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia, Andromeda (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), MySQL, Apache Kafka and Zookeeper.
+This will start the Giles Ecosystem docker environment. If you are using `latest_tag`, there will be 9 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia, Andromeda (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), MySQL, Apache Kafka and Zookeeper. If you are using `develop`, a 10th container will be started for September.
 
 The following ports will be exposed:
 * `8080`: your Giles instance; the webapp is running at `http://locahost:8080/giles`
@@ -22,6 +22,9 @@ The following ports will be exposed:
 * `8082`: your Cepheus instance; the webapp is running at `http://locahost:8082/cepheus`
 * `8083`: your Cassiopeia instance; the webapp is running at `http://locahost:8083/cassiopeia`
 * `8084`: your Andromeda instance; the webapp is running at `http://localhost:8084/andromeda`
+
+If you are using `develop`, there is an additional app running:
+* `8085`: your September instance; the webapp is running at `http://localhost:8085/september`
 
 ## Configuration
 1. Once up and running, go to Giles and login as admin (bottom of the page) with admin/admin.
@@ -61,6 +64,8 @@ With version v0.6, Nepomuk started to use MySQL (or PostgreSQL) as backend. If y
 If `docker-compose up` fails with an error message such as `Could not transfer artifact org.apache.maven:maven-archiver:pom:2.6 from/to central (https://repo.maven.apache.org/maven2): Connection reset -> [Help 1]`, this might simply be a connection issue and rerunning `docker-compose up` might fix it.
 
 If Docker doesn't have enough memory, the individual containers might quietly fail (specifically with exit code 137) when you try to access one of the apps. To fix this issue simply give Docker more memory.
+
+It can take a little while till all containers are up and running. If you upload a file and it is not processed but there are no error messages in the log, retry uploading the file after a couple of minutes.
 
 ## Reporting Issues
 If you run into issues setting up this docker environment or if the test file does not get processed successfully, please submit a [GitHub issue](https://github.com/diging/giles-eco-docker/issues). If the docker terminal shows exceptions or error messages, please include them in the ticket.
