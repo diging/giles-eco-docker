@@ -1,4 +1,4 @@
-FROM tomcat:8.5-jdk8-openjdk
+FROM tomcat:9.0-jdk11-temurin-focal
 
 MAINTAINER Julia Damerow https://github.com/jdamerow
 
@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get -y update
 RUN apt-get install -y maven
-RUN apt-get install -y git-all
+RUN apt-get install -y git
 RUN apt-get install -y subversion
 
 ARG kafka_host=kafka:9092
