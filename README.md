@@ -17,10 +17,10 @@ Note: if you have installed the Giles Ecosystem docker containers previously for
 This will start the Giles Ecosystem docker environment. If you are using `latest_tag`, there will be 9 docker container running: Giles, Nepomuk, Cepheus, Cassiopeia, Andromeda (the Giles Ecosystem suite), Digilib (to serve up images, no exposed ports), MySQL, Apache Kafka and Zookeeper. If you are using `develop`, a 10th container will be started for September.
 
 The following ports will be exposed:
-* `8080`: your Giles instance; the webapp is running at `http://locahost:8080/giles`
-* `8081`: your Nepomuk instance; the webapp is running at `http://locahost:8081/nepomuk`
-* `8082`: your Cepheus instance; the webapp is running at `http://locahost:8082/cepheus`
-* `8083`: your Cassiopeia instance; the webapp is running at `http://locahost:8083/cassiopeia`
+* `8080`: your Giles instance; the webapp is running at `http://localhost:8080/giles`
+* `8081`: your Nepomuk instance; the webapp is running at `http://localhost:8081/nepomuk`
+* `8082`: your Cepheus instance; the webapp is running at `http://localhost:8082/cepheus`
+* `8083`: your Cassiopeia instance; the webapp is running at `http://localhost:8083/cassiopeia`
 * `8084`: your Andromeda instance; the webapp is running at `http://localhost:8084/andromeda`
 
 If you are using `develop`, there is an additional app running:

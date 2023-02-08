@@ -32,12 +32,10 @@ RUN git clone https://github.com/diging/giles-eco-september-util.git && cd giles
 # install kafka-util
 # RUN git clone https://github.com/diging/giles-eco-kafka-util.git && cd giles-eco-kafka-util/kafka-util && git checkout master && git pull && git checkout v0.1 && mvn clean install -Dgeco.kafka.util.version=$geco.kafka.util.version -Dgeco.september.util.version=$geco.septemberutil.version
 
-RUN git clone https://github.com/diging/giles-eco-nepomuk.git
-WORKDIR giles-eco-nepomuk/nepomuk
-RUN mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/data/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dzookeeper.host=zookeeper -Ddb.database.url=jdbc:mysql://mysql:3306/nepomuk -Ddb.user=nepomuk -Ddb.password=NepomukPassword -Dgeco.september.util.version=$geco_septemberutil_version -Dgeco.kafka-util.version=$geco_kafka_util_version
+RUN git clone https://github.com/diging/giles-eco-nepomuk.git && cd giles-eco-nepomuk/nepomuk && mvn clean package -Dnepomuk.db.files=/data/dbs/nepomuk/ -Dnepomuk.digilibBaseDir=/data -Dnepomuk.images.folder=imgs -Dnepomuk.baseDir=/data/ -Dnepomuk.texts.folder=texts -Dnepomuk.pdfs.folder=pdfs -Dnepomuk.otherFiles.folder=other -Dlog.level=info -Dnepomuk.kafka.hosts=$kafka_host -Dnepomuk.base.url=$nepomuk_url -Dgeco.requests.version=$request_version -Dgeco.util.version=$util_version -Dzookeeper.host=zookeeper -Ddb.database.url=jdbc:mysql://mysql:3306/nepomuk -Ddb.user=root -Ddb.password=sqlpassword -Dgeco.september.util.version=$geco_septemberutil_version -Dgeco.kafka-util.version=$geco_kafka_util_version
 
 # deploy Nepomuk
-RUN cp ./target/nepomuk.war /usr/local/tomcat/webapps/
+RUN cp ./giles-eco-nepomuk/nepomuk/target/nepomuk.war /usr/local/tomcat/webapps/
 
 WORKDIR /usr/local/tomcat/
 RUN mkdir persist
